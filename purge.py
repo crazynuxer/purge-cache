@@ -16,18 +16,27 @@ servers = config.get('purge', 'server').split()
 def GetPath(url	):
     if url.startswith('http'):
         domain = urlparse.urlparse(url).netloc
-        path = urlparse.urlparse(url).path + "?" + urlparse.urlparse(url).query
+        if urlparse.urlparse(url).query != '':
+            path = urlparse.urlparse(url).path + "?" + urlparse.urlparse(url).query
+        else:
+            path = urlparse.urlparse(url).path 
 	#print domain + ' ' + path + ' ' + urlparse.urlparse(url).query
 	print domain + ' ' + path
     elif url.startswith('//'):
         url = "http:" + url
         domain = urlparse.urlparse(url).netloc
-        path = urlparse.urlparse(url).path + "?" + urlparse.urlparse(url).query
+        if urlparse.urlparse(url).query != '':
+            path = urlparse.urlparse(url).path + "?" + urlparse.urlparse(url).query
+        else:
+            path = urlparse.urlparse(url).path 
 	print domain + ' ' + path
     else:
         url = "http://" + url
         domain = urlparse.urlparse(url).netloc
-        path = urlparse.urlparse(url).path + "?" + urlparse.urlparse(url).query
+        if urlparse.urlparse(url).query != '':
+            path = urlparse.urlparse(url).path + "?" + urlparse.urlparse(url).query
+        else:
+            path = urlparse.urlparse(url).path 
 	print domain + ' ' + path
     return domain, path    
 
