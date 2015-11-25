@@ -31,7 +31,7 @@ def GetPath(url	):
 	print domain + ' ' + path
     return domain, path    
 
-def Purge(host,domain,path):
+def Purge(host,path,domain):
     s = Session()
     req = Request('PURGE', "http://%s/purge/%s" % (host, path),headers={'Host': domain})
     prepped = req.prepare()
@@ -59,6 +59,7 @@ class purge(tornado.web.RequestHandler):
         turl = GetPath(urlparse.urlparse(self.request.uri).query[4:])
         test = urlparse.urlparse(self.request.uri).query[4:]
         for server in servers:
+            Purge(server,turl[1],turl[0])
             response = server + ' ' + turl[0] + ' ' + turl[1] + " </br>"
             self.write(response)
         self.finish()
